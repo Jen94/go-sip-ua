@@ -6,17 +6,17 @@ import (
 	"strconv"
 	"sync"
 
-	"github.com/cloudwebrtc/go-sip-ua/pkg/account"
-	"github.com/cloudwebrtc/go-sip-ua/pkg/auth"
-	"github.com/cloudwebrtc/go-sip-ua/pkg/session"
-	"github.com/cloudwebrtc/go-sip-ua/pkg/stack"
+	"github.com/jen94/go-sip-ua/pkg/account"
+	"github.com/jen94/go-sip-ua/pkg/auth"
+	"github.com/jen94/go-sip-ua/pkg/session"
+	"github.com/jen94/go-sip-ua/pkg/stack"
 
 	"github.com/ghettovoice/gosip/log"
 	"github.com/ghettovoice/gosip/sip"
 	"github.com/ghettovoice/gosip/transaction"
 	"github.com/ghettovoice/gosip/util"
 
-	"github.com/cloudwebrtc/go-sip-ua/pkg/utils"
+	"github.com/jen94/go-sip-ua/pkg/utils"
 )
 
 // UserAgentConfig .

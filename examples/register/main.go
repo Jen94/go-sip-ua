@@ -6,13 +6,13 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/cloudwebrtc/go-sip-ua/pkg/account"
-	"github.com/cloudwebrtc/go-sip-ua/pkg/media/rtp"
-	"github.com/cloudwebrtc/go-sip-ua/pkg/stack"
-	"github.com/cloudwebrtc/go-sip-ua/pkg/ua"
-	"github.com/cloudwebrtc/go-sip-ua/pkg/utils"
 	"github.com/ghettovoice/gosip/log"
 	"github.com/ghettovoice/gosip/sip/parser"
+	"github.com/jen94/go-sip-ua/pkg/account"
+	"github.com/jen94/go-sip-ua/pkg/media/rtp"
+	"github.com/jen94/go-sip-ua/pkg/stack"
+	"github.com/jen94/go-sip-ua/pkg/ua"
+	"github.com/jen94/go-sip-ua/pkg/utils"
 )
 
 var (

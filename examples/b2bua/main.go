@@ -10,9 +10,9 @@ import (
 	"syscall"
 
 	"github.com/c-bata/go-prompt"
-	"github.com/cloudwebrtc/go-sip-ua/examples/b2bua/b2bua"
-	"github.com/cloudwebrtc/go-sip-ua/pkg/utils"
 	"github.com/ghettovoice/gosip/log"
+	"github.com/jen94/go-sip-ua/examples/b2bua/b2bua"
+	"github.com/jen94/go-sip-ua/pkg/utils"
 )
 
 func completer(d prompt.Document) []prompt.Suggest {

@@ -5,7 +5,7 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/cloudwebrtc/go-sip-ua/pkg/media/rtp"
+	"github.com/jen94/go-sip-ua/pkg/media/rtp"
 
 	"github.com/ghettovoice/gosip/log"
 	"github.com/sirupsen/logrus"
