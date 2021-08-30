@@ -129,6 +129,62 @@ func (ua *UserAgent) Invite(profile *account.Profile, target sip.Uri, recipient 
 	return ua.InviteWithContext(context.TODO(), profile, target, recipient, body)
 }
 
+func (ua *UserAgent) InviteWithCustomHeaders(profile *account.Profile, target sip.Uri, recipient sip.SipUri, headers []sip.Header, body *string) (*session.Session, error) {
+	ctx := context.TODO()
+	from := &sip.Address{
+		DisplayName: sip.String{Str: profile.DisplayName},
+		Uri:         profile.URI,
+		Params:      sip.NewParams().Add("tag", sip.String{Str: util.RandString(8)}),
+	}
+
+	contact := profile.Contact()
+
+	to := &sip.Address{
+		Uri: target,
+	}
+
+	request, err := ua.buildRequest(sip.INVITE, from, to, contact, recipient, profile.Routes, nil)
+	if err != nil {
+		ua.Log().Errorf("INVITE: err = %v", err)
+		return nil, err
+	}
+
+	if body != nil {
+		(*request).SetBody(*body, true)
+		contentType := sip.ContentType("application/sdp")
+		(*request).AppendHeader(&contentType)
+	}
+	for _, header := range headers {
+		(*request).AppendHeader(header)
+	}
+
+	var authorizer *auth.ClientAuthorizer = nil
+	if profile.AuthInfo != nil {
+		authorizer = auth.NewClientAuthorizer(profile.AuthInfo.AuthUser, profile.AuthInfo.Password)
+	}
+
+	resp, err := ua.RequestWithContext(ctx, *request, authorizer, false, 1)
+	if err != nil {
+		ua.Log().Errorf("INVITE: Request [INVITE] failed, err => %v", err)
+		return nil, err
+	}
+
+	if resp != nil {
+		stateCode := resp.StatusCode()
+		ua.Log().Debugf("INVITE: resp %d => %s", stateCode, resp.String())
+		return nil, fmt.Errorf("Invite session is unsuccessful, code: %d, reason: %s", stateCode, resp.String())
+	}
+
+	callID, ok := (*request).CallID()
+	if ok {
+		if v, found := ua.iss.Load(*callID); found {
+			return v.(*session.Session), nil
+		}
+	}
+
+	return nil, fmt.Errorf("invite session not found, unknown errors")
+}
+
 func (ua *UserAgent) InviteWithContext(ctx context.Context, profile *account.Profile, target sip.Uri, recipient sip.SipUri, body *string) (*session.Session, error) {
 
 	from := &sip.Address{
