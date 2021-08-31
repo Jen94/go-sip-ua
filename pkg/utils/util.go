@@ -70,7 +70,12 @@ func ListenUDPInPortRange(portMin, portMax int, laddr *net.UDPAddr) (*net.UDPCon
 	}
 	portStart := rand.Intn(j-i+1) + i
 	portCurrent := portStart
+	tryCount := 10
 	for {
+		tryCount -= 1
+		if tryCount < 0 {
+			return nil, ErrPort
+		}
 		*laddr = net.UDPAddr{IP: laddr.IP, Port: portCurrent}
 		c, e := net.ListenUDP("udp", laddr)
 		if e == nil {
