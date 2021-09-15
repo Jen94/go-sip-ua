@@ -71,9 +71,10 @@ func ListenUDPInPortRange(portMin, portMax int, laddr *net.UDPAddr) (*net.UDPCon
 	portStart := rand.Intn(j-i+1) + i
 	portCurrent := portStart
 	tryCount := 10
-	if (portMax - portMin) > tryCount {
+	// it freezes
+	/*if (portMax - portMin) > tryCount {
 		tryCount = portMax - portMin
-	}
+	}*/
 	for {
 		tryCount -= 1
 		if tryCount < 0 {
