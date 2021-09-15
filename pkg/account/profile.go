@@ -113,3 +113,12 @@ type RegisterState struct {
 	Response   sip.Response
 	UserData   interface{}
 }
+
+type ReferState struct {
+	Account    *Profile
+	StatusCode sip.StatusCode
+	Reason     string
+	Expiration uint32
+	Response   sip.Response
+	UserData   interface{}
+}

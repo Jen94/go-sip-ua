@@ -125,6 +125,16 @@ func (ua *UserAgent) SendRegister(profile *account.Profile, recipient sip.SipUri
 	return register, nil
 }
 
+func (ua *UserAgent) SendRefer(profile *account.Profile, recipient sip.SipUri, expires uint32, userdata interface{}, headers []sip.Header, fromTag string, toTag string, callID string, referTo string, referredBy string, cseq int) (*Refer, error) {
+	refer := NewRefer(ua, profile, recipient, userdata)
+	err := refer.SendRefer(expires, headers, fromTag, toTag, callID, referTo, referredBy, cseq)
+	if err != nil {
+		ua.Log().Errorf("SendRefer failed, err => %v", err)
+		return nil, err
+	}
+	return refer, nil
+}
+
 func (ua *UserAgent) Invite(profile *account.Profile, target sip.Uri, recipient sip.SipUri, body *string) (*session.Session, error) {
 	return ua.InviteWithContext(context.TODO(), profile, target, recipient, body)
 }
