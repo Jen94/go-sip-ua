@@ -103,7 +103,7 @@ func NewRefer(ua *UserAgent, profile *account.Profile, recipient sip.SipUri, dat
 		request:   nil,
 		data:      data,
 	}
-	r.ctx, r.cancel = context.WithCancel(context.Background())
+	r.ctx, r.cancel = context.WithTimeout(context.Background(), 5*time.Second)
 	return r
 }
 
