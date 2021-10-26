@@ -51,7 +51,7 @@ func NewUserAgent(config *UserAgentConfig) *UserAgent {
 	stack := config.SipStack
 	stack.OnRequest(sip.INVITE, ua.handleInvite)
 	stack.OnRequest(sip.ACK, ua.handleACK)
-	stack.OnRequest(sip.BYE, ua.handleBye)
+	stack.OnRequest(sip.BYE, ua.HandleBye)
 	stack.OnRequest(sip.CANCEL, ua.handleCancel)
 	return ua
 }
@@ -252,7 +252,7 @@ func (ua *UserAgent) Request(req *sip.Request) (sip.ClientTransaction, error) {
 	return ua.config.SipStack.Request(*req)
 }
 
-func (ua *UserAgent) handleBye(request sip.Request, tx sip.ServerTransaction) {
+func (ua *UserAgent) HandleBye(request sip.Request, tx sip.ServerTransaction) {
 	ua.Log().Debugf("handleBye: Request => %s, body => %s", request.Short(), request.Body())
 	response := sip.NewResponseFromRequest(request.MessageID(), request, 200, "OK", "")
 
